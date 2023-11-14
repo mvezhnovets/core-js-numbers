@@ -234,8 +234,10 @@ function isPrime(n) {
  *   toNumber(42, 0) => 42
  *   toNumber(new Number(42), 0) => 42
  */
-function toNumber(/* value, def */) {
-  throw new Error('Not implemented');
+function toNumber(value, def) {
+  if (Number.isNaN(+value) === true) return def;
+  const thisIsNumber = typeof +value === 'number' ? +value : def;
+  return thisIsNumber;
 }
 
 /**
@@ -422,8 +424,8 @@ function getNumberValue(number) {
  * 5        => true
  * '5'      => false
  */
-function isNumber(/* number */) {
-  throw new Error('Not implemented');
+function isNumber(number) {
+  return Number.isFinite(number);
 }
 
 /**
@@ -469,8 +471,13 @@ function getFloatOnString(str) {
  * '1.234', 2           => 1
  * '10', 8              => 8
  */
-function getIntegerOnString(/* str, base */) {
-  throw new Error('Not implemented');
+function getIntegerOnString(str, base) {
+  if (
+    typeof Number.parseInt(str, base) === 'number' ||
+    Number.isNaN(Number.parseInt(str, base))
+  )
+    return Number.parseInt(str, base);
+  return false;
 }
 
 /**
@@ -622,8 +629,13 @@ function getHypotenuse(a, b) {
  * 10 => 5
  * 15 => 8
  */
-function getCountOfOddNumbers(/* number */) {
-  throw new Error('Not implemented');
+function getCountOfOddNumbers(number) {
+  const positiveNumber = number < 0 ? number * -1 : number;
+  const countOfOdd =
+    positiveNumber % 2 === 0
+      ? positiveNumber / 2
+      : Math.trunc(positiveNumber / 2) + 1;
+  return countOfOdd;
 }
 
 module.exports = {
